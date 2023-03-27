@@ -570,3 +570,5 @@ ENTRYPOINT ["/entrypoint.sh"]
 
 RUN sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 RUN sudo flatpak install flathub com.valvesoftware.Steam -y
+
+RUN flatpak override --user --filesystem=host com.valvesoftware.Steam
