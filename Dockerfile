@@ -353,28 +353,6 @@ RUN \
     && \
     echo
 
-# Install Steam
-RUN \
-    echo "**** Install steam ****" \
-        && dpkg --add-architecture i386 \
-        && apt-get update \
-        && echo steam steam/question select "I AGREE" | debconf-set-selections \
-        && echo steam steam/license note '' | debconf-set-selections \
-        && apt-get install -y \
-        && apt-get install -y \
-            steam \
-            steam-devices \
-    && \
-    echo "**** Section cleanup ****" \
-        && apt-get clean autoclean -y \
-        && apt-get autoremove -y \
-        && rm -rf \
-            /var/lib/apt/lists/* \
-            /var/tmp/* \
-            /tmp/* \
-    && \
-    echo
-
 # Install firefox
 RUN \
     echo "**** Update apt database ****" \
@@ -589,3 +567,6 @@ EXPOSE 8083
 # Set entrypoint
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
+
+RUN sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+RUN sudo flatpak install flathub com.valvesoftware.Steam
